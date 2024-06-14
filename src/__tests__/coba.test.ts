@@ -86,7 +86,7 @@ describe("Test des scores d'équipe", () => {
     it("calculer le score d'une équipe avec vert et orange", () => {
       const equipe: De[] = [{ couleur: "vert" }, { couleur: "orange" }];
       const score = getTeamScore(equipe, []);
-      expect(score).toBe(2); // 1 (vert) + 1 (orange)
+      expect(score).toBe(3); // 1 (vert) + 2 (orange)
     });
 
     it("calculer le score d'une équipe avec vert et jaune", () => {
@@ -216,7 +216,7 @@ describe("Test des scores d'équipe", () => {
         { couleur: "jaune" },
       ];
       const score = getTeamScore(equipe, []);
-      expect(score).toBe(2); // 1 (vert) + 2 (orange) + (-1) (jaune)
+      expect(score).toBe(2); // 1 (vert) + 1 (orange) + (-1) (jaune)
     });
 
     it("calculer le score d'une équipe avec vert, orange, et bleu", () => {
@@ -226,7 +226,7 @@ describe("Test des scores d'équipe", () => {
         { couleur: "bleu" },
       ];
       const score = getTeamScore(equipe, []);
-      expect(score).toBe(3); // 1 (vert) + 2 (orange) + 0 (bleu, pas d'autres dés adverses)
+      expect(score).toBe(3); // 1 (vert) + 1 (orange) + 0 (bleu, pas d'autres dés adverses)
     });
 
     it("calculer le score d'une équipe avec vert, orange, et rose", () => {
@@ -236,7 +236,7 @@ describe("Test des scores d'équipe", () => {
         { couleur: "rose" },
       ];
       const score = getTeamScore(equipe, []);
-      expect(score).toBe(5); // 1 (vert) + 1 (orange) + 3 (rose)
+      expect(score).toBe(3); // 1 (vert) + 1 (orange) + 3 (rose) et les dés orange et vert sont à 0
     });
 
     it("calculer le score d'une équipe avec vert, jaune, et bleu", () => {
@@ -286,7 +286,7 @@ describe("Test des scores d'équipe", () => {
         { couleur: "bleu" },
       ];
       const score = getTeamScore(equipe, []);
-      expect(score).toBe(3); // 2 (gris) + 1 (orange) + 0 (bleu, pas d'autres dés adverses)
+      expect(score).toBe(4); // 2 (gris) + 2 (orange) + 0 (bleu, pas d'autres dés adverses)
     });
 
     it("calculer le score d'une équipe avec gris, orange, et rose", () => {
@@ -296,7 +296,7 @@ describe("Test des scores d'équipe", () => {
         { couleur: "rose" },
       ];
       const score = getTeamScore(equipe, []);
-      expect(score).toBe(6); // 2 (gris) + 1 (orange) + 3 (rose)
+      expect(score).toBe(5); // 2 (gris) + 1 (orange) + 3 (rose) le dé orange est à 0
     });
 
     it("calculer le score d'une équipe avec gris, jaune, et bleu", () => {
@@ -316,7 +316,7 @@ describe("Test des scores d'équipe", () => {
         { couleur: "rose" },
       ];
       const score = getTeamScore(equipe, []);
-      expect(score).toBe(4); // 2 (gris) + (-1) (jaune) + 3 (rose)
+      expect(score).toBe(5); // 2 (gris) + (-1) (jaune) + 3 (rose) le jaune est ignoré
     });
 
     it("calculer le score d'une équipe avec gris, bleu, et rose", () => {
@@ -326,7 +326,7 @@ describe("Test des scores d'équipe", () => {
         { couleur: "rose" },
       ];
       const score = getTeamScore(equipe, []);
-      expect(score).toBe(5); // 2 (gris) + 0 (bleu, pas d'autres dés adverses) + 3 (rose)
+      expect(score).toBe(3); // 2 (gris) + 0 (bleu, pas d'autres dés adverses) + 3 (rose) le gris est ignoré
     });
 
     it("calculer le score d'une équipe avec orange, jaune, et bleu", () => {
@@ -336,7 +336,7 @@ describe("Test des scores d'équipe", () => {
         { couleur: "bleu" },
       ];
       const score = getTeamScore(equipe, []);
-      expect(score).toBe(0); // 1 (orange) + (-1) (jaune) + 0 (bleu, pas d'autres dés adverses)
+      expect(score).toBe(2); // 2 (orange) + (-1) (jaune) + 0 (bleu, pas d'autres dés adverses)
     });
 
     it("calculer le score d'une équipe avec orange, jaune, et rose", () => {
@@ -346,7 +346,7 @@ describe("Test des scores d'équipe", () => {
         { couleur: "rose" },
       ];
       const score = getTeamScore(equipe, []);
-      expect(score).toBe(3); // 1 (orange) + (-1) (jaune) + 3 (rose)
+      expect(score).toBe(4); // 1 (orange) + (-1) (jaune) + 3 (rose) et le dé orange est à 0
     });
 
     it("calculer le score d'une équipe avec orange, bleu, et rose", () => {
@@ -356,7 +356,7 @@ describe("Test des scores d'équipe", () => {
         { couleur: "rose" },
       ];
       const score = getTeamScore(equipe, []);
-      expect(score).toBe(4); // 1 (orange) + 0 (bleu, pas d'autres dés adverses) + 3 (rose)
+      expect(score).toBe(3); // 1 (orange) + 0 (bleu, pas d'autres dés adverses) + 3 (rose) le orange est ignoré
     });
 
     it("calculer le score d'une équipe avec jaune, bleu, et rose", () => {
@@ -366,7 +366,7 @@ describe("Test des scores d'équipe", () => {
         { couleur: "rose" },
       ];
       const score = getTeamScore(equipe, []);
-      expect(score).toBe(2); // -1 (jaune) + 0 (bleu, pas d'autres dés adverses) + 3 (rose)
+      expect(score).toBe(3); // -1 (jaune) + 0 (bleu, pas d'autres dés adverses) + 3 (rose) le jaune est ignoré
     });
   });
 });

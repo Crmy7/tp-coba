@@ -11,9 +11,9 @@ export type Color = "vert" | "gris" | "orange" | "jaune" | "bleu" | "rose";
 const colors: Record<Color, number> = {
   vert: 1,
   gris: 2,
-  orange: 1, // Le calcul pour Orange sera traité séparément
+  orange: 1, // par défaut 1, mais 2 si paire
   jaune: -1,
-  bleu: 0, // Le calcul pour Bleu sera traité séparément
+  bleu: 0,
   rose: 3,
 };
 
@@ -35,6 +35,7 @@ export function getValueByColor(
     return autresDes.length;
   }
 
+  // si la couleur est rose, on retire le dé de plus petite valeur
   if (couleur === "rose") {
     const minValeur = Math.min(
       ...des.map((d) => getValueByColor(d.couleur, des, autresDes))
@@ -56,6 +57,7 @@ export function getTeamScore(equipe: De[], autresDes: De[]): number {
   let noRose: number[] = [];
   const blueCount = autresDes.length;
 
+  // pour chaque dé de l'équipe on calcule sa valeur
   equipe.forEach((de) => {
     if (de.couleur === "orange") {
       orangeCount += 1;
@@ -68,16 +70,17 @@ export function getTeamScore(equipe: De[], autresDes: De[]): number {
       noRose.push(value);
     }
   });
-
+  
+  // Pour chaque dé orange, on ajoute 1 si impair, 2 si pair
   const orangeImpact = orangeCount % 2 === 0 ? 2 : 1;
   teamPower += orangeCount * orangeImpact;
   noRose.push(...Array(orangeCount).fill(orangeImpact));
 
+  // Si l'équipe contient un dé rose, on retire le dé de plus petite valeur
   if (equipe.some((de) => de.couleur === "rose")) {
-    const lowestValueDice = Math.min(...noRose);
+    const smallestDice = Math.min(...noRose);
     teamPower -=
-      lowestValueDice *
-      noRose.filter((value) => value === lowestValueDice).length;
+      smallestDice * noRose.filter((value) => value === smallestDice).length;
   }
 
   return teamPower;
